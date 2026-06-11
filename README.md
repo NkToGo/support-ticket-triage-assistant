@@ -14,3 +14,8 @@ ASGI app import path:
 ```text
 support_triage.main:app
 ```
+
+## API
+
+- `GET /health` returns `{"status": "ok"}`.
+- `POST /triage/rules` accepts a ticket and returns a deterministic rule-based triage result.
