@@ -19,3 +19,7 @@ support_triage.main:app
 
 - `GET /health` returns `{"status": "ok"}`.
 - `POST /triage/rules` accepts a ticket and returns a deterministic rule-based triage result.
+
+## Data
+
+- `data/eval/triage_cases.json` contains synthetic labeled tickets for future evaluation work.

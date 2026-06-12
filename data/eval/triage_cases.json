@@ -1,0 +1,682 @@
+[
+  {
+    "id": "account_access_001",
+    "ticket": {
+      "subject": "Cannot sign in after phone replacement",
+      "body": "I replaced my phone and no longer have the MFA app. I cannot get into the dashboard and my work is blocked.",
+      "customer_tier": "premium",
+      "product_area": "authentication"
+    },
+    "expected": {
+      "category": "account_access",
+      "priority": "P1",
+      "routing_target": "support_tier_2",
+      "requires_human_review": true,
+      "review_reasons": ["priority_high"]
+    },
+    "notes": "Access is blocked because MFA is unavailable."
+  },
+  {
+    "id": "account_access_002",
+    "ticket": {
+      "subject": "Enterprise admin stuck in SSO login loop",
+      "body": "Our admin signs in through SSO but gets sent back to the login page every time. They cannot access workspace settings.",
+      "customer_tier": "enterprise",
+      "product_area": "authentication"
+    },
+    "expected": {
+      "category": "account_access",
+      "priority": "P1",
+      "routing_target": "support_tier_2",
+      "requires_human_review": true,
+      "review_reasons": ["priority_high"]
+    },
+    "notes": "High-value account access issue blocks an admin workflow."
+  },
+  {
+    "id": "account_access_003",
+    "ticket": {
+      "subject": "New employee did not receive invite",
+      "body": "Can you resend the workspace invite for a new teammate? They checked spam and still do not see it.",
+      "customer_tier": "standard",
+      "product_area": "user_management"
+    },
+    "expected": {
+      "category": "account_access",
+      "priority": "P2",
+      "routing_target": "support_tier_1",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Common invite issue with no high-risk signals."
+  },
+  {
+    "id": "account_access_004",
+    "ticket": {
+      "subject": "Password reset link expired",
+      "body": "One user tried the password reset email after lunch and the link says it expired. Please send a fresh one.",
+      "customer_tier": "free",
+      "product_area": "authentication"
+    },
+    "expected": {
+      "category": "account_access",
+      "priority": "P2",
+      "routing_target": "support_tier_1",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Single-user credential support request."
+  },
+  {
+    "id": "account_access_005",
+    "ticket": {
+      "subject": "Team owner locked out and escalating",
+      "body": "Our team owner is locked out before a customer review. Please escalate because leadership is waiting on access.",
+      "customer_tier": "enterprise",
+      "product_area": "authentication"
+    },
+    "expected": {
+      "category": "account_access",
+      "priority": "P1",
+      "routing_target": "support_tier_2",
+      "requires_human_review": true,
+      "review_reasons": ["priority_high", "customer_escalation"]
+    },
+    "notes": "Blocked account access plus explicit escalation wording."
+  },
+  {
+    "id": "billing_subscription_001",
+    "ticket": {
+      "subject": "Refund duplicate annual charge",
+      "body": "We were charged twice for our annual renewal. Please refund the duplicate payment.",
+      "customer_tier": "premium",
+      "product_area": "billing"
+    },
+    "expected": {
+      "category": "billing_subscription",
+      "priority": "P2",
+      "routing_target": "billing_ops",
+      "requires_human_review": true,
+      "review_reasons": ["billing_sensitive"]
+    },
+    "notes": "Refund request should be reviewed by billing operations."
+  },
+  {
+    "id": "billing_subscription_002",
+    "ticket": {
+      "subject": "Disputed charge may become chargeback",
+      "body": "There is a disputed charge on our card and finance may file a chargeback if we cannot resolve it today.",
+      "customer_tier": "standard",
+      "product_area": "billing"
+    },
+    "expected": {
+      "category": "billing_subscription",
+      "priority": "P2",
+      "routing_target": "billing_ops",
+      "requires_human_review": true,
+      "review_reasons": ["billing_sensitive"]
+    },
+    "notes": "Disputed charge and chargeback wording make it billing-sensitive."
+  },
+  {
+    "id": "billing_subscription_003",
+    "ticket": {
+      "subject": "Cancel trial before renewal",
+      "body": "Please cancel our trial before it renews next week. We do not want the subscription to convert.",
+      "customer_tier": "free",
+      "product_area": "billing"
+    },
+    "expected": {
+      "category": "billing_subscription",
+      "priority": "P2",
+      "routing_target": "billing_ops",
+      "requires_human_review": true,
+      "review_reasons": ["billing_sensitive"]
+    },
+    "notes": "Cancellation request needs billing review."
+  },
+  {
+    "id": "billing_subscription_004",
+    "ticket": {
+      "subject": "Need invoice copy and PO update",
+      "body": "Can you send a copy of invoice INV-2381 and update the purchase order number for our records?",
+      "customer_tier": "standard",
+      "product_area": "billing"
+    },
+    "expected": {
+      "category": "billing_subscription",
+      "priority": "P2",
+      "routing_target": "billing_ops",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Routine invoice administration request."
+  },
+  {
+    "id": "billing_subscription_005",
+    "ticket": {
+      "subject": "Payment failed on renewal",
+      "body": "The renewal payment failed because our card expired. Where can we update the payment method?",
+      "customer_tier": "standard",
+      "product_area": "billing"
+    },
+    "expected": {
+      "category": "billing_subscription",
+      "priority": "P2",
+      "routing_target": "billing_ops",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Normal payment update request with no refund or dispute."
+  },
+  {
+    "id": "bug_report_001",
+    "ticket": {
+      "subject": "CSV export fails with 502",
+      "body": "When I click Export CSV, the download fails with a 502 error. It happens every time for the project report.",
+      "customer_tier": "standard",
+      "product_area": "reports"
+    },
+    "expected": {
+      "category": "bug_report",
+      "priority": "P2",
+      "routing_target": "engineering_triage",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Reproducible product failure for engineering triage."
+  },
+  {
+    "id": "bug_report_002",
+    "ticket": {
+      "subject": "Monthly report totals are wrong",
+      "body": "The totals in the monthly report are wrong for all projects. Finance is using this report today.",
+      "customer_tier": "premium",
+      "product_area": "reports"
+    },
+    "expected": {
+      "category": "bug_report",
+      "priority": "P1",
+      "routing_target": "engineering_triage",
+      "requires_human_review": true,
+      "review_reasons": ["priority_high"]
+    },
+    "notes": "Understated wording but high business impact."
+  },
+  {
+    "id": "bug_report_003",
+    "ticket": {
+      "subject": "Regression after latest release",
+      "body": "After yesterday's release, saved filters apply the wrong status across multiple projects. It worked before.",
+      "customer_tier": "enterprise",
+      "product_area": "search"
+    },
+    "expected": {
+      "category": "bug_report",
+      "priority": "P1",
+      "routing_target": "engineering_triage",
+      "requires_human_review": true,
+      "review_reasons": ["priority_high"]
+    },
+    "notes": "Regression affecting multiple projects at an enterprise account."
+  },
+  {
+    "id": "bug_report_004",
+    "ticket": {
+      "subject": "Button alignment looks off",
+      "body": "The Save button is one pixel lower than the Cancel button on the settings page. Everything still works.",
+      "customer_tier": "free",
+      "product_area": "settings"
+    },
+    "expected": {
+      "category": "bug_report",
+      "priority": "P3",
+      "routing_target": "engineering_triage",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Cosmetic issue with low impact."
+  },
+  {
+    "id": "bug_report_005",
+    "ticket": {
+      "subject": "API validation error on create request",
+      "body": "Our integration receives a validation error every time it sends a valid create request with the documented payload.",
+      "customer_tier": "standard",
+      "product_area": "api"
+    },
+    "expected": {
+      "category": "bug_report",
+      "priority": "P2",
+      "routing_target": "engineering_triage",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Likely product bug in API validation."
+  },
+  {
+    "id": "performance_availability_001",
+    "ticket": {
+      "subject": "Application down for everyone",
+      "body": "The application is down for everyone on our account. Nobody can load the login page.",
+      "customer_tier": "enterprise",
+      "product_area": "platform"
+    },
+    "expected": {
+      "category": "performance_availability",
+      "priority": "P0",
+      "routing_target": "incident_response",
+      "requires_human_review": true,
+      "review_reasons": ["priority_high", "potential_incident"]
+    },
+    "notes": "Broad outage signal."
+  },
+  {
+    "id": "performance_availability_002",
+    "ticket": {
+      "subject": "Login page returns 503",
+      "body": "All users get a 503 Service Unavailable page when they try to sign in.",
+      "customer_tier": "premium",
+      "product_area": "authentication"
+    },
+    "expected": {
+      "category": "performance_availability",
+      "priority": "P0",
+      "routing_target": "incident_response",
+      "requires_human_review": true,
+      "review_reasons": ["priority_high", "potential_incident"]
+    },
+    "notes": "Availability issue affects all users."
+  },
+  {
+    "id": "performance_availability_003",
+    "ticket": {
+      "subject": "Severe latency for support team",
+      "body": "Pages take 20 to 30 seconds to load and our whole support team is affected during business hours.",
+      "customer_tier": "enterprise",
+      "product_area": "platform"
+    },
+    "expected": {
+      "category": "performance_availability",
+      "priority": "P1",
+      "routing_target": "incident_response",
+      "requires_human_review": true,
+      "review_reasons": ["priority_high", "potential_incident"]
+    },
+    "notes": "Severe degradation with broad team impact."
+  },
+  {
+    "id": "performance_availability_004",
+    "ticket": {
+      "subject": "Admin page slightly slow sometimes",
+      "body": "The admin page is a little slow sometimes, but all actions eventually complete and no users are blocked.",
+      "customer_tier": "standard",
+      "product_area": "admin"
+    },
+    "expected": {
+      "category": "performance_availability",
+      "priority": "P3",
+      "routing_target": "support_tier_1",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Low-impact performance complaint."
+  },
+  {
+    "id": "performance_availability_005",
+    "ticket": {
+      "subject": "Intermittent timeout for one user",
+      "body": "One user sees an intermittent timeout when opening large reports. Other users can access the same reports.",
+      "customer_tier": "standard",
+      "product_area": "reports"
+    },
+    "expected": {
+      "category": "performance_availability",
+      "priority": "P2",
+      "routing_target": "support_tier_1",
+      "requires_human_review": true,
+      "review_reasons": ["potential_incident"]
+    },
+    "notes": "Availability signal is limited to one user."
+  },
+  {
+    "id": "technical_support_001",
+    "ticket": {
+      "subject": "Configure SAML SSO",
+      "body": "Can someone help us configure SAML SSO for our workspace before we invite the rest of the team?",
+      "customer_tier": "enterprise",
+      "product_area": "authentication"
+    },
+    "expected": {
+      "category": "technical_support",
+      "priority": "P2",
+      "routing_target": "support_tier_2",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Configuration support request."
+  },
+  {
+    "id": "technical_support_002",
+    "ticket": {
+      "subject": "Webhook signing secret setup",
+      "body": "How do I configure the webhook signing secret for our staging environment?",
+      "customer_tier": "standard",
+      "product_area": "integrations"
+    },
+    "expected": {
+      "category": "technical_support",
+      "priority": "P2",
+      "routing_target": "support_tier_2",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Webhook setup guidance."
+  },
+  {
+    "id": "technical_support_003",
+    "ticket": {
+      "subject": "API key permission question",
+      "body": "Our staging API key cannot create test records. Which permission should we enable?",
+      "customer_tier": "standard",
+      "product_area": "api"
+    },
+    "expected": {
+      "category": "technical_support",
+      "priority": "P2",
+      "routing_target": "support_tier_2",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Permissions troubleshooting without clear product defect."
+  },
+  {
+    "id": "technical_support_004",
+    "ticket": {
+      "subject": "Salesforce import field mapping",
+      "body": "Our Salesforce import rejects one custom field mapping. I am not sure which field type is supported.",
+      "customer_tier": "premium",
+      "product_area": "integrations"
+    },
+    "expected": {
+      "category": "technical_support",
+      "priority": "P2",
+      "routing_target": "support_tier_2",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Integration troubleshooting request."
+  },
+  {
+    "id": "technical_support_005",
+    "ticket": {
+      "subject": "URGENT dashboard configuration question",
+      "body": "This is urgent for our internal demo, but I only need to know how to configure dashboard filters for a saved view.",
+      "customer_tier": "standard",
+      "product_area": "dashboards"
+    },
+    "expected": {
+      "category": "technical_support",
+      "priority": "P2",
+      "routing_target": "support_tier_2",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Emotional urgency with normal support impact."
+  },
+  {
+    "id": "data_security_privacy_001",
+    "ticket": {
+      "subject": "Former employee still has access",
+      "body": "A user who left the company still appears to have access to reports after their account was disabled.",
+      "customer_tier": "enterprise",
+      "product_area": "security"
+    },
+    "expected": {
+      "category": "data_security_privacy",
+      "priority": "P1",
+      "routing_target": "security_compliance",
+      "requires_human_review": true,
+      "review_reasons": ["priority_high", "security_or_privacy"]
+    },
+    "notes": "Possible access-control risk."
+  },
+  {
+    "id": "data_security_privacy_002",
+    "ticket": {
+      "subject": "GDPR deletion request",
+      "body": "Please delete all personal data for user jane@example.com under GDPR.",
+      "customer_tier": "standard",
+      "product_area": "privacy"
+    },
+    "expected": {
+      "category": "data_security_privacy",
+      "priority": "P1",
+      "routing_target": "security_compliance",
+      "requires_human_review": true,
+      "review_reasons": ["priority_high", "security_or_privacy", "policy_sensitive"]
+    },
+    "notes": "Privacy request requiring policy-sensitive handling."
+  },
+  {
+    "id": "data_security_privacy_003",
+    "ticket": {
+      "subject": "Data exported to wrong customer",
+      "body": "A scheduled export appears to have sent one customer's report to another customer. The file contained personal data.",
+      "customer_tier": "enterprise",
+      "product_area": "reports"
+    },
+    "expected": {
+      "category": "data_security_privacy",
+      "priority": "P0",
+      "routing_target": "security_compliance",
+      "requires_human_review": true,
+      "review_reasons": ["priority_high", "security_or_privacy", "policy_sensitive"]
+    },
+    "notes": "Potential data exposure with cross-customer impact."
+  },
+  {
+    "id": "data_security_privacy_004",
+    "ticket": {
+      "subject": "Suspicious login activity",
+      "body": "We see suspicious login attempts from a country where we do not operate. Can security review the account?",
+      "customer_tier": "premium",
+      "product_area": "security"
+    },
+    "expected": {
+      "category": "data_security_privacy",
+      "priority": "P1",
+      "routing_target": "security_compliance",
+      "requires_human_review": true,
+      "review_reasons": ["priority_high", "security_or_privacy"]
+    },
+    "notes": "Security investigation request."
+  },
+  {
+    "id": "data_security_privacy_005",
+    "ticket": {
+      "subject": "DPA and privacy handling question",
+      "body": "Our legal team is reviewing the DPA and wants to confirm how personal data is handled for archived users.",
+      "customer_tier": "enterprise",
+      "product_area": "privacy"
+    },
+    "expected": {
+      "category": "data_security_privacy",
+      "priority": "P2",
+      "routing_target": "security_compliance",
+      "requires_human_review": true,
+      "review_reasons": ["security_or_privacy"]
+    },
+    "notes": "Privacy-sensitive question without immediate incident impact."
+  },
+  {
+    "id": "feature_request_001",
+    "ticket": {
+      "subject": "Dark mode request",
+      "body": "Can you add dark mode to the admin dashboard?",
+      "customer_tier": "free",
+      "product_area": "dashboards"
+    },
+    "expected": {
+      "category": "feature_request",
+      "priority": "P3",
+      "routing_target": "product_management",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Low-risk product enhancement request."
+  },
+  {
+    "id": "feature_request_002",
+    "ticket": {
+      "subject": "Schedule weekly dashboard emails",
+      "body": "It would be helpful if dashboards could be scheduled as weekly email reports.",
+      "customer_tier": "standard",
+      "product_area": "dashboards"
+    },
+    "expected": {
+      "category": "feature_request",
+      "priority": "P3",
+      "routing_target": "product_management",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Enhancement idea for dashboards."
+  },
+  {
+    "id": "feature_request_003",
+    "ticket": {
+      "subject": "Bulk user import enhancement",
+      "body": "We would like a bulk user import option from CSV so onboarding large teams is faster.",
+      "customer_tier": "premium",
+      "product_area": "user_management"
+    },
+    "expected": {
+      "category": "feature_request",
+      "priority": "P3",
+      "routing_target": "product_management",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Product enhancement request."
+  },
+  {
+    "id": "feature_request_004",
+    "ticket": {
+      "subject": "Improve dashboard layout controls",
+      "body": "Please improve the dashboard layout so widgets can snap to a grid.",
+      "customer_tier": "standard",
+      "product_area": "dashboards"
+    },
+    "expected": {
+      "category": "feature_request",
+      "priority": "P3",
+      "routing_target": "product_management",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Layout improvement suggestion."
+  },
+  {
+    "id": "feature_request_005",
+    "ticket": {
+      "subject": "URGENT color customization request",
+      "body": "URGENT: our team really needs custom chart colors for a presentation, but the current colors still work.",
+      "customer_tier": "standard",
+      "product_area": "dashboards"
+    },
+    "expected": {
+      "category": "feature_request",
+      "priority": "P3",
+      "routing_target": "product_management",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Emotional urgency with low actual impact."
+  },
+  {
+    "id": "other_unclear_001",
+    "ticket": {
+      "subject": "Need help",
+      "body": "Please call me back.",
+      "customer_tier": null,
+      "product_area": null
+    },
+    "expected": {
+      "category": "other_unclear",
+      "priority": "P3",
+      "routing_target": "support_tier_1",
+      "requires_human_review": true,
+      "review_reasons": ["low_confidence", "missing_critical_details"]
+    },
+    "notes": "Too little detail to classify safely."
+  },
+  {
+    "id": "other_unclear_002",
+    "ticket": {
+      "subject": "Your website is bad",
+      "body": "Nothing else to add.",
+      "customer_tier": "free",
+      "product_area": null
+    },
+    "expected": {
+      "category": "other_unclear",
+      "priority": "P3",
+      "routing_target": "support_tier_1",
+      "requires_human_review": true,
+      "review_reasons": ["low_confidence", "missing_critical_details"]
+    },
+    "notes": "Vague complaint without a support signal."
+  },
+  {
+    "id": "other_unclear_003",
+    "ticket": {
+      "subject": "Question about my account",
+      "body": "I have a question about my account but I do not know which details matter.",
+      "customer_tier": "standard",
+      "product_area": null
+    },
+    "expected": {
+      "category": "other_unclear",
+      "priority": "P3",
+      "routing_target": "support_tier_1",
+      "requires_human_review": true,
+      "review_reasons": ["low_confidence", "missing_critical_details"]
+    },
+    "notes": "Mentions account but lacks actionable detail."
+  },
+  {
+    "id": "other_unclear_004",
+    "ticket": {
+      "subject": "Billing, login, and errors",
+      "body": "We have billing questions, login trouble, and some errors, but I need to gather examples before explaining.",
+      "customer_tier": "standard",
+      "product_area": null
+    },
+    "expected": {
+      "category": "other_unclear",
+      "priority": "P3",
+      "routing_target": "support_tier_1",
+      "requires_human_review": true,
+      "review_reasons": ["low_confidence", "ambiguous_category", "missing_critical_details"]
+    },
+    "notes": "Multiple possible categories without enough specifics."
+  },
+  {
+    "id": "other_unclear_005",
+    "ticket": {
+      "subject": "Following up",
+      "body": "Following up on the thing we discussed last week. Can you check it?",
+      "customer_tier": "premium",
+      "product_area": null
+    },
+    "expected": {
+      "category": "other_unclear",
+      "priority": "P3",
+      "routing_target": "support_tier_1",
+      "requires_human_review": true,
+      "review_reasons": ["low_confidence", "missing_critical_details"]
+    },
+    "notes": "Refers to missing prior context."
+  }
+]
