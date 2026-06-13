@@ -23,3 +23,9 @@ support_triage.main:app
 ## Data
 
 - `data/eval/triage_cases.json` contains synthetic labeled tickets for future evaluation work.
+
+## Evaluation
+
+```powershell
+py scripts/run_triage_eval.py --mode rules
+```
