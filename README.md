@@ -29,3 +29,5 @@ support_triage.main:app
 ```powershell
 py scripts/run_triage_eval.py --mode rules
 ```
+
+See `reports/rules_baseline_eval.md` for the first rules baseline report and failure analysis.
