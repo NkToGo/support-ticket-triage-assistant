@@ -31,3 +31,5 @@ py scripts/run_triage_eval.py --mode rules
 ```
 
 See `reports/rules_baseline_eval.md` for the first rules baseline report and failure analysis.
+
+See `reports/rules_baseline_eval_after_tuning.md` for the tuned rules baseline report.
