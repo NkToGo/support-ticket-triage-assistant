@@ -1,0 +1,410 @@
+[
+  {
+    "id": "account_access_holdout_001",
+    "ticket": {
+      "subject": "SSO certificate expired overnight",
+      "body": "Our SSO certificate expired and employees are redirected back to the identity provider. Nobody can reach the workspace admin page.",
+      "customer_tier": "enterprise",
+      "product_area": "authentication"
+    },
+    "expected": {
+      "category": "account_access",
+      "priority": "P1",
+      "routing_target": "support_tier_2",
+      "requires_human_review": true,
+      "review_reasons": ["priority_high"]
+    },
+    "notes": "Blocked SSO access for an enterprise account."
+  },
+  {
+    "id": "account_access_holdout_002",
+    "ticket": {
+      "subject": "Invite link question",
+      "body": "A teammate says their invite link is confusing. They can still sign in, but want to know if we can send a cleaner invite email.",
+      "customer_tier": "standard",
+      "product_area": "user_management"
+    },
+    "expected": {
+      "category": "account_access",
+      "priority": "P2",
+      "routing_target": "support_tier_1",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Account access support wording without a blocking issue."
+  },
+  {
+    "id": "account_access_holdout_003",
+    "ticket": {
+      "subject": "Manager keeps seeing MFA prompt",
+      "body": "One manager is asked for MFA every time they open the app. They can eventually sign in after several attempts.",
+      "customer_tier": "premium",
+      "product_area": "authentication"
+    },
+    "expected": {
+      "category": "account_access",
+      "priority": "P2",
+      "routing_target": "support_tier_1",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Single-user friction with a workaround."
+  },
+  {
+    "id": "billing_subscription_holdout_001",
+    "ticket": {
+      "subject": "Invoice PDF button question",
+      "body": "The Download PDF button for invoice INV-4021 is hard to find. Can billing send the invoice copy directly?",
+      "customer_tier": "standard",
+      "product_area": "billing"
+    },
+    "expected": {
+      "category": "billing_subscription",
+      "priority": "P2",
+      "routing_target": "billing_ops",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Billing request with UI wording but no product bug."
+  },
+  {
+    "id": "billing_subscription_holdout_002",
+    "ticket": {
+      "subject": "Refund disputed renewal",
+      "body": "Finance disputes the renewal charge because the account was supposed to be downgraded. Please issue a refund or credit.",
+      "customer_tier": "premium",
+      "product_area": "billing"
+    },
+    "expected": {
+      "category": "billing_subscription",
+      "priority": "P2",
+      "routing_target": "billing_ops",
+      "requires_human_review": true,
+      "review_reasons": ["billing_sensitive"]
+    },
+    "notes": "Billing-sensitive dispute with refund and credit language."
+  },
+  {
+    "id": "billing_subscription_holdout_003",
+    "ticket": {
+      "subject": "Plan downgrade timing",
+      "body": "We want to downgrade from premium to standard at the next renewal. What happens to the subscription features?",
+      "customer_tier": "premium",
+      "product_area": "billing"
+    },
+    "expected": {
+      "category": "billing_subscription",
+      "priority": "P2",
+      "routing_target": "billing_ops",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Subscription plan question without refund, cancellation, or dispute."
+  },
+  {
+    "id": "bug_report_holdout_001",
+    "ticket": {
+      "subject": "Dashboard totals changed",
+      "body": "The dashboard total says 418 open tickets, but the filtered list only shows 391. Finance noticed the mismatch this morning.",
+      "customer_tier": "standard",
+      "product_area": "dashboards"
+    },
+    "expected": {
+      "category": "bug_report",
+      "priority": "P1",
+      "routing_target": "engineering_triage",
+      "requires_human_review": true,
+      "review_reasons": ["priority_high"]
+    },
+    "notes": "Understated data correctness issue with finance impact."
+  },
+  {
+    "id": "bug_report_holdout_002",
+    "ticket": {
+      "subject": "Mobile layout overlaps",
+      "body": "On a small phone screen, the export icon overlaps the date selector. The page still works if I rotate the phone.",
+      "customer_tier": "free",
+      "product_area": "mobile"
+    },
+    "expected": {
+      "category": "bug_report",
+      "priority": "P3",
+      "routing_target": "engineering_triage",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Low-impact UI bug with a workaround."
+  },
+  {
+    "id": "bug_report_holdout_003",
+    "ticket": {
+      "subject": "API returns 409 for valid payload",
+      "body": "Our integration gets a 409 conflict for a documented create request. The same payload worked last week.",
+      "customer_tier": "standard",
+      "product_area": "api"
+    },
+    "expected": {
+      "category": "bug_report",
+      "priority": "P2",
+      "routing_target": "engineering_triage",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "API product behavior appears broken, not a setup question."
+  },
+  {
+    "id": "performance_availability_holdout_001",
+    "ticket": {
+      "subject": "Search feels slow",
+      "body": "Search is a little slow for one analyst when filtering old records. Results still load after a few seconds.",
+      "customer_tier": "standard",
+      "product_area": "search"
+    },
+    "expected": {
+      "category": "performance_availability",
+      "priority": "P3",
+      "routing_target": "support_tier_1",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Low-impact performance complaint."
+  },
+  {
+    "id": "performance_availability_holdout_002",
+    "ticket": {
+      "subject": "All users see gateway timeout",
+      "body": "Every user in our workspace gets a 504 gateway timeout when opening the dashboard.",
+      "customer_tier": "enterprise",
+      "product_area": "platform"
+    },
+    "expected": {
+      "category": "performance_availability",
+      "priority": "P0",
+      "routing_target": "incident_response",
+      "requires_human_review": true,
+      "review_reasons": ["priority_high", "potential_incident"]
+    },
+    "notes": "Broad availability issue with all users blocked from dashboard access."
+  },
+  {
+    "id": "performance_availability_holdout_003",
+    "ticket": {
+      "subject": "Large report times out for one user",
+      "body": "A single analyst gets a timeout on one large report. Everyone else can open smaller reports normally.",
+      "customer_tier": "premium",
+      "product_area": "reports"
+    },
+    "expected": {
+      "category": "performance_availability",
+      "priority": "P2",
+      "routing_target": "support_tier_1",
+      "requires_human_review": true,
+      "review_reasons": ["potential_incident"]
+    },
+    "notes": "Availability signal is limited but still worth review as a potential incident."
+  },
+  {
+    "id": "technical_support_holdout_001",
+    "ticket": {
+      "subject": "Export configuration help",
+      "body": "How do we configure scheduled exports so each department receives a separate CSV file?",
+      "customer_tier": "standard",
+      "product_area": "reports"
+    },
+    "expected": {
+      "category": "technical_support",
+      "priority": "P2",
+      "routing_target": "support_tier_2",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Configuration support request that mentions export."
+  },
+  {
+    "id": "technical_support_holdout_002",
+    "ticket": {
+      "subject": "Webhook and API setup",
+      "body": "We need help setting up the webhook endpoint and rotating the API key for our test workspace.",
+      "customer_tier": "standard",
+      "product_area": "api"
+    },
+    "expected": {
+      "category": "technical_support",
+      "priority": "P2",
+      "routing_target": "support_tier_2",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Integration setup without product failure."
+  },
+  {
+    "id": "technical_support_holdout_003",
+    "ticket": {
+      "subject": "Import mapping question",
+      "body": "During import setup, which field type should we use for a multi-select owner list?",
+      "customer_tier": "premium",
+      "product_area": "integrations"
+    },
+    "expected": {
+      "category": "technical_support",
+      "priority": "P2",
+      "routing_target": "support_tier_2",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Import setup question, not an import failure."
+  },
+  {
+    "id": "data_security_privacy_holdout_001",
+    "ticket": {
+      "subject": "Report may include another customer's rows",
+      "body": "This might be nothing, but one export appears to show rows with another customer's account name.",
+      "customer_tier": "enterprise",
+      "product_area": "reports"
+    },
+    "expected": {
+      "category": "data_security_privacy",
+      "priority": "P0",
+      "routing_target": "security_compliance",
+      "requires_human_review": true,
+      "review_reasons": ["priority_high", "security_or_privacy", "policy_sensitive"]
+    },
+    "notes": "Understated cross-customer data exposure concern."
+  },
+  {
+    "id": "data_security_privacy_holdout_002",
+    "ticket": {
+      "subject": "DPA retention question",
+      "body": "Our compliance team wants to confirm retention behavior for archived users under the DPA.",
+      "customer_tier": "enterprise",
+      "product_area": "privacy"
+    },
+    "expected": {
+      "category": "data_security_privacy",
+      "priority": "P2",
+      "routing_target": "security_compliance",
+      "requires_human_review": true,
+      "review_reasons": ["security_or_privacy"]
+    },
+    "notes": "Privacy-sensitive policy question without incident language."
+  },
+  {
+    "id": "data_security_privacy_holdout_003",
+    "ticket": {
+      "subject": "Disabled contractor still appears active",
+      "body": "A contractor account we disabled yesterday still appears active in the audit log and may have opened a report.",
+      "customer_tier": "premium",
+      "product_area": "security"
+    },
+    "expected": {
+      "category": "data_security_privacy",
+      "priority": "P1",
+      "routing_target": "security_compliance",
+      "requires_human_review": true,
+      "review_reasons": ["priority_high", "security_or_privacy"]
+    },
+    "notes": "Possible access-control issue with a disabled account."
+  },
+  {
+    "id": "feature_request_holdout_001",
+    "ticket": {
+      "subject": "API export enhancement",
+      "body": "We would like the API export to include custom labels. This is not blocking our current integration.",
+      "customer_tier": "premium",
+      "product_area": "api"
+    },
+    "expected": {
+      "category": "feature_request",
+      "priority": "P3",
+      "routing_target": "product_management",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Feature request mentioning API and export terms."
+  },
+  {
+    "id": "feature_request_holdout_002",
+    "ticket": {
+      "subject": "Import template suggestion",
+      "body": "It would be helpful if import templates could be saved and reused across teams.",
+      "customer_tier": "standard",
+      "product_area": "integrations"
+    },
+    "expected": {
+      "category": "feature_request",
+      "priority": "P3",
+      "routing_target": "product_management",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Enhancement request that mentions import but is not support troubleshooting."
+  },
+  {
+    "id": "feature_request_holdout_003",
+    "ticket": {
+      "subject": "URGENT brand colors",
+      "body": "URGENT for a presentation: can we customize chart colors to match our brand? The default colors still work.",
+      "customer_tier": "standard",
+      "product_area": "dashboards"
+    },
+    "expected": {
+      "category": "feature_request",
+      "priority": "P3",
+      "routing_target": "product_management",
+      "requires_human_review": false,
+      "review_reasons": []
+    },
+    "notes": "Emotional urgency with low actual product impact."
+  },
+  {
+    "id": "other_unclear_holdout_001",
+    "ticket": {
+      "subject": "Checking on last week's thing",
+      "body": "Can you look at the thing from last week again? I do not have the details in front of me.",
+      "customer_tier": null,
+      "product_area": null
+    },
+    "expected": {
+      "category": "other_unclear",
+      "priority": "P3",
+      "routing_target": "support_tier_1",
+      "requires_human_review": true,
+      "review_reasons": ["low_confidence", "missing_critical_details"]
+    },
+    "notes": "Missing prior context and no actionable detail."
+  },
+  {
+    "id": "other_unclear_holdout_002",
+    "ticket": {
+      "subject": "Login, invoice, and dashboard problem",
+      "body": "Something is wrong with login, an invoice, and the dashboard, but I need to collect screenshots before explaining.",
+      "customer_tier": "standard",
+      "product_area": null
+    },
+    "expected": {
+      "category": "other_unclear",
+      "priority": "P3",
+      "routing_target": "support_tier_1",
+      "requires_human_review": true,
+      "review_reasons": ["low_confidence", "ambiguous_category", "missing_critical_details"]
+    },
+    "notes": "Mixed-intent vague complaint should not be forced into one category."
+  },
+  {
+    "id": "other_unclear_holdout_003",
+    "ticket": {
+      "subject": "Extremely urgent",
+      "body": "This is extremely urgent and someone needs to fix it now. I cannot share more details yet.",
+      "customer_tier": "premium",
+      "product_area": null
+    },
+    "expected": {
+      "category": "other_unclear",
+      "priority": "P3",
+      "routing_target": "support_tier_1",
+      "requires_human_review": true,
+      "review_reasons": ["low_confidence", "missing_critical_details"]
+    },
+    "notes": "Emotional urgency without actionable content."
+  }
+]

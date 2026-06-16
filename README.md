@@ -28,8 +28,11 @@ support_triage.main:app
 
 ```powershell
 py scripts/run_triage_eval.py --mode rules
+py scripts/run_triage_eval.py --mode rules --dataset data/eval/triage_holdout_cases.json
 ```
 
 See `reports/rules_baseline_eval.md` for the first rules baseline report and failure analysis.
 
 See `reports/rules_baseline_eval_after_tuning.md` for the tuned rules baseline report.
+
+See `reports/rules_holdout_eval.md` for the holdout rules evaluation report.

@@ -39,6 +39,7 @@ class FailureRecord:
 
 @dataclass(frozen=True)
 class EvaluationSummary:
+    dataset_path: str
     total_cases: int
     category_accuracy: float
     priority_accuracy: float
@@ -90,8 +91,21 @@ def load_eval_cases(path: Path | str | None = None) -> list[EvaluationCase]:
     return cases
 
 
-def evaluate_rules(cases: Sequence[EvaluationCase] | None = None) -> EvaluationSummary:
-    eval_cases = list(cases) if cases is not None else load_eval_cases()
+def evaluate_rules(
+    cases: Sequence[EvaluationCase] | None = None,
+    dataset_path: Path | str | None = None,
+) -> EvaluationSummary:
+    if cases is not None and dataset_path is not None:
+        raise ValueError("Pass either cases or dataset_path, not both.")
+
+    if cases is not None:
+        eval_cases = list(cases)
+        summary_dataset_path = "provided cases"
+    else:
+        selected_dataset_path = Path(dataset_path) if dataset_path is not None else DEFAULT_DATASET_PATH
+        eval_cases = load_eval_cases(selected_dataset_path)
+        summary_dataset_path = str(selected_dataset_path.resolve())
+
     total_cases = len(eval_cases)
 
     category_correct = 0
@@ -149,6 +163,7 @@ def evaluate_rules(cases: Sequence[EvaluationCase] | None = None) -> EvaluationS
     recall = _safe_divide(true_positives, true_positives + false_negatives)
 
     return EvaluationSummary(
+        dataset_path=summary_dataset_path,
         total_cases=total_cases,
         category_accuracy=_safe_divide(category_correct, total_cases),
         priority_accuracy=_safe_divide(priority_correct, total_cases),
