@@ -42,3 +42,5 @@ See `reports/rules_baseline_eval.md` for the first rules baseline report and fai
 See `reports/rules_baseline_eval_after_tuning.md` for the tuned rules baseline report.
 
 See `reports/rules_holdout_eval.md` for the holdout rules evaluation report.
+
+See `reports/llm_smoke_eval.md` for the first live LLM smoke evaluation notes.
