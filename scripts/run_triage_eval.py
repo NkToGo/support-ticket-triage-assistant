@@ -9,27 +9,42 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 SRC_PATH = REPO_ROOT / "src"
 sys.path.insert(0, str(SRC_PATH))
 
-from support_triage.evaluation import evaluate_rules  # noqa: E402
+from support_triage.evaluation import evaluate_llm, evaluate_rules  # noqa: E402
+from support_triage.llm import LLMTriageConfigurationError  # noqa: E402
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run support ticket triage evaluation.")
-    parser.add_argument("--mode", choices=["rules"], required=True)
+    parser.add_argument("--mode", choices=["rules", "llm"], required=True)
     parser.add_argument("--dataset", help="Path to a labeled triage dataset JSON file.")
+    parser.add_argument("--limit", type=int, help="Evaluate only the first N cases.")
     args = parser.parse_args()
 
-    if args.mode == "rules":
-        summary = evaluate_rules(dataset_path=args.dataset)
-        _print_summary(summary)
-        return 0
+    try:
+        if args.mode == "rules":
+            summary = evaluate_rules(dataset_path=args.dataset, limit=args.limit)
+        else:
+            print("LLM mode may call the OpenAI API and requires OPENAI_API_KEY.")
+            summary = evaluate_llm(dataset_path=args.dataset, limit=args.limit)
+    except LLMTriageConfigurationError as exc:
+        print(f"LLM evaluation failed: {exc}", file=sys.stderr)
+        return 2
+    except ValueError as exc:
+        print(f"Evaluation failed: {exc}", file=sys.stderr)
+        return 2
 
-    return 1
+    _print_summary(summary, mode=args.mode, limit=args.limit)
+    return 0
 
 
-def _print_summary(summary) -> None:
-    print("Rule Baseline Evaluation")
-    print("========================")
+def _print_summary(summary, *, mode: str, limit: int | None) -> None:
+    title = "Rule Baseline Evaluation" if mode == "rules" else "LLM Triage Evaluation"
+    print(title)
+    print("=" * len(title))
+    print(f"mode: {mode}")
     print(f"dataset: {summary.dataset_path}")
+    if limit is not None:
+        print(f"limit: {limit}")
     for name, value in summary.metrics().items():
         if name == "total_cases":
             print(f"{name}: {value}")

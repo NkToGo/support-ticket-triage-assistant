@@ -29,8 +29,13 @@ support_triage.main:app
 
 ```powershell
 py scripts/run_triage_eval.py --mode rules
+py scripts/run_triage_eval.py --mode rules --limit 5
 py scripts/run_triage_eval.py --mode rules --dataset data/eval/triage_holdout_cases.json
+py scripts/run_triage_eval.py --mode llm --limit 5
+py scripts/run_triage_eval.py --mode llm --dataset data/eval/triage_holdout_cases.json
 ```
+
+LLM evaluation requires `OPENAI_API_KEY` and may call the OpenAI API.
 
 See `reports/rules_baseline_eval.md` for the first rules baseline report and failure analysis.
 

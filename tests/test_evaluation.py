@@ -1,4 +1,12 @@
-from support_triage.evaluation import FailureRecord, evaluate_rules, load_eval_cases
+import pytest
+
+from support_triage.evaluation import (
+    FailureRecord,
+    evaluate_llm,
+    evaluate_rules,
+    load_eval_cases,
+)
+from support_triage.llm import LLMTriageConfigurationError
 
 
 METRIC_NAMES = (
@@ -48,6 +56,15 @@ def test_rules_evaluation_accepts_custom_dataset_path() -> None:
     ) or summary.dataset_path.endswith("data/eval/triage_holdout_cases.json")
 
 
+def test_rules_evaluation_accepts_limit() -> None:
+    summary = evaluate_rules(limit=5)
+
+    assert summary.total_cases == 5
+    for metric_name in METRIC_NAMES:
+        metric_value = getattr(summary, metric_name)
+        assert 0.0 <= metric_value <= 1.0
+
+
 def test_rules_evaluation_metrics_are_bounded() -> None:
     summary = evaluate_rules()
 
@@ -81,3 +98,56 @@ def test_failure_records_include_mismatch_details() -> None:
     assert "category" in failure.predicted
     assert isinstance(failure.expected_review_reasons, list)
     assert isinstance(failure.predicted_review_reasons, list)
+
+
+def test_llm_evaluation_uses_monkeypatched_predictor(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    cases = load_eval_cases()[:3]
+    calls = []
+
+    def fake_predictor(ticket):
+        calls.append(ticket)
+        return cases[len(calls) - 1].expected
+
+    monkeypatch.setattr("support_triage.evaluation.triage_with_llm", fake_predictor)
+
+    summary = evaluate_llm(cases=cases)
+
+    assert summary.total_cases == 3
+    assert summary.exact_match_accuracy == 1.0
+    assert len(summary.failures) == 0
+    assert calls == [case.ticket for case in cases]
+
+
+def test_llm_evaluation_accepts_limit_with_fake_predictor(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    cases = load_eval_cases()
+    calls = []
+
+    def fake_predictor(ticket):
+        calls.append(ticket)
+        return cases[len(calls) - 1].expected
+
+    monkeypatch.setattr("support_triage.evaluation.triage_with_llm", fake_predictor)
+
+    summary = evaluate_llm(cases=cases, limit=2)
+
+    assert summary.total_cases == 2
+    assert len(calls) == 2
+
+
+def test_llm_evaluation_missing_api_key_is_clear(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+
+    with pytest.raises(LLMTriageConfigurationError, match="OPENAI_API_KEY"):
+        evaluate_llm(limit=1)
+
+
+@pytest.mark.parametrize("limit", [0, -1])
+def test_evaluation_rejects_invalid_limit(limit: int) -> None:
+    with pytest.raises(ValueError, match="limit"):
+        evaluate_rules(limit=limit)

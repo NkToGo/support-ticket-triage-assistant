@@ -1,9 +1,10 @@
 import json
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from support_triage.llm import triage_with_llm
 from support_triage.models import TicketInput, TicketPriority, TriageResult
 from support_triage.rules import triage_with_rules
 
@@ -94,9 +95,40 @@ def load_eval_cases(path: Path | str | None = None) -> list[EvaluationCase]:
 def evaluate_rules(
     cases: Sequence[EvaluationCase] | None = None,
     dataset_path: Path | str | None = None,
+    limit: int | None = None,
+) -> EvaluationSummary:
+    return _evaluate_with_predictor(
+        triage_with_rules,
+        cases=cases,
+        dataset_path=dataset_path,
+        limit=limit,
+    )
+
+
+def evaluate_llm(
+    cases: Sequence[EvaluationCase] | None = None,
+    dataset_path: Path | str | None = None,
+    limit: int | None = None,
+) -> EvaluationSummary:
+    return _evaluate_with_predictor(
+        triage_with_llm,
+        cases=cases,
+        dataset_path=dataset_path,
+        limit=limit,
+    )
+
+
+def _evaluate_with_predictor(
+    predictor: Callable[[TicketInput], TriageResult],
+    *,
+    cases: Sequence[EvaluationCase] | None = None,
+    dataset_path: Path | str | None = None,
+    limit: int | None = None,
 ) -> EvaluationSummary:
     if cases is not None and dataset_path is not None:
         raise ValueError("Pass either cases or dataset_path, not both.")
+    if limit is not None and limit <= 0:
+        raise ValueError("limit must be greater than zero.")
 
     if cases is not None:
         eval_cases = list(cases)
@@ -105,6 +137,9 @@ def evaluate_rules(
         selected_dataset_path = Path(dataset_path) if dataset_path is not None else DEFAULT_DATASET_PATH
         eval_cases = load_eval_cases(selected_dataset_path)
         summary_dataset_path = str(selected_dataset_path.resolve())
+
+    if limit is not None:
+        eval_cases = eval_cases[:limit]
 
     total_cases = len(eval_cases)
 
@@ -121,7 +156,7 @@ def evaluate_rules(
     failures: list[FailureRecord] = []
 
     for case in eval_cases:
-        predicted = triage_with_rules(case.ticket)
+        predicted = predictor(case.ticket)
         expected = case.expected
 
         category_match = predicted.category == expected.category
