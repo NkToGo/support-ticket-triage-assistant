@@ -44,3 +44,5 @@ See `reports/rules_baseline_eval_after_tuning.md` for the tuned rules baseline r
 See `reports/rules_holdout_eval.md` for the holdout rules evaluation report.
 
 See `reports/llm_smoke_eval.md` for the first live LLM smoke evaluation notes.
+
+See `reports/rules_vs_llm_eval.md` for the Rules vs LLM evaluation comparison.
