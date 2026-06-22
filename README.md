@@ -46,3 +46,5 @@ See `reports/rules_holdout_eval.md` for the holdout rules evaluation report.
 See `reports/llm_smoke_eval.md` for the first live LLM smoke evaluation notes.
 
 See `reports/rules_vs_llm_eval.md` for the Rules vs LLM evaluation comparison.
+
+See `docs/hybrid-triage-design.md` for the proposed hybrid triage design.
