@@ -20,6 +20,7 @@ support_triage.main:app
 - `GET /health` returns `{"status": "ok"}`.
 - `POST /triage/rules` accepts a ticket and returns a deterministic rule-based triage result.
 - `POST /triage/llm` accepts a ticket and returns an OpenAI structured-output triage result. It requires `OPENAI_API_KEY`; `OPENAI_MODEL` can override the default model.
+- `POST /triage/hybrid` runs rules first and may call the LLM for uncertain or sensitive cases. It requires `OPENAI_API_KEY` only when LLM review is needed.
 
 ## Data
 

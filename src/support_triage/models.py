@@ -51,6 +51,13 @@ class CustomerTier(StrEnum):
     ENTERPRISE = "enterprise"
 
 
+class HybridStrategy(StrEnum):
+    RULES_ONLY = "rules_only"
+    LLM_ONLY = "llm_only"
+    RULES_THEN_LLM_FOR_UNCERTAIN = "rules_then_llm_for_uncertain"
+    RULES_WITH_LLM_REVIEW_FOR_SENSITIVE_CASES = "rules_with_llm_review_for_sensitive_cases"
+
+
 class TicketInput(BaseModel):
     subject: str = Field(min_length=1)
     body: str = Field(min_length=1)
@@ -66,3 +73,13 @@ class TriageResult(BaseModel):
     review_reasons: list[ReviewReason]
     confidence: float = Field(ge=0.0, le=1.0)
     rationale: str = Field(min_length=1)
+
+
+class HybridTriageResult(BaseModel):
+    final_result: TriageResult
+    strategy: HybridStrategy
+    rules_result: TriageResult
+    llm_result: TriageResult | None = None
+    used_llm: bool
+    disagreement_fields: list[str]
+    decision_rationale: str = Field(min_length=1)

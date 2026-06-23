@@ -3,6 +3,8 @@ from pydantic import ValidationError
 
 from support_triage.models import (
     CustomerTier,
+    HybridStrategy,
+    HybridTriageResult,
     ReviewReason,
     RoutingTarget,
     TicketCategory,
@@ -38,6 +40,32 @@ def test_valid_triage_result_can_be_created() -> None:
     assert result.category == TicketCategory.ACCOUNT_ACCESS
     assert result.requires_human_review is True
     assert result.review_reasons == [ReviewReason.PRIORITY_HIGH]
+
+
+def test_valid_hybrid_triage_result_can_be_created() -> None:
+    rules_result = TriageResult(
+        category=TicketCategory.FEATURE_REQUEST,
+        priority=TicketPriority.P3,
+        routing_target=RoutingTarget.PRODUCT_MANAGEMENT,
+        requires_human_review=False,
+        review_reasons=[],
+        confidence=0.85,
+        rationale="Detected feature request or product feedback signals.",
+    )
+
+    result = HybridTriageResult(
+        final_result=rules_result,
+        strategy=HybridStrategy.RULES_ONLY,
+        rules_result=rules_result,
+        llm_result=None,
+        used_llm=False,
+        disagreement_fields=[],
+        decision_rationale="Rules result accepted; no LLM review trigger was present.",
+    )
+
+    assert result.final_result == rules_result
+    assert result.strategy == HybridStrategy.RULES_ONLY
+    assert result.used_llm is False
 
 
 def test_invalid_enum_values_fail_validation() -> None:
