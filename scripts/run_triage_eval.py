@@ -9,13 +9,13 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 SRC_PATH = REPO_ROOT / "src"
 sys.path.insert(0, str(SRC_PATH))
 
-from support_triage.evaluation import evaluate_llm, evaluate_rules  # noqa: E402
+from support_triage.evaluation import evaluate_hybrid, evaluate_llm, evaluate_rules  # noqa: E402
 from support_triage.llm import LLMTriageConfigurationError  # noqa: E402
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run support ticket triage evaluation.")
-    parser.add_argument("--mode", choices=["rules", "llm"], required=True)
+    parser.add_argument("--mode", choices=["rules", "llm", "hybrid"], required=True)
     parser.add_argument("--dataset", help="Path to a labeled triage dataset JSON file.")
     parser.add_argument("--limit", type=int, help="Evaluate only the first N cases.")
     args = parser.parse_args()
@@ -23,11 +23,14 @@ def main() -> int:
     try:
         if args.mode == "rules":
             summary = evaluate_rules(dataset_path=args.dataset, limit=args.limit)
-        else:
+        elif args.mode == "llm":
             print("LLM mode may call the OpenAI API and requires OPENAI_API_KEY.")
             summary = evaluate_llm(dataset_path=args.dataset, limit=args.limit)
+        else:
+            print("Hybrid mode may call the OpenAI API when LLM review is needed.")
+            summary = evaluate_hybrid(dataset_path=args.dataset, limit=args.limit)
     except LLMTriageConfigurationError as exc:
-        print(f"LLM evaluation failed: {exc}", file=sys.stderr)
+        print(f"{args.mode} evaluation failed: {exc}", file=sys.stderr)
         return 2
     except ValueError as exc:
         print(f"Evaluation failed: {exc}", file=sys.stderr)
@@ -38,7 +41,12 @@ def main() -> int:
 
 
 def _print_summary(summary, *, mode: str, limit: int | None) -> None:
-    title = "Rule Baseline Evaluation" if mode == "rules" else "LLM Triage Evaluation"
+    titles = {
+        "rules": "Rule Baseline Evaluation",
+        "llm": "LLM Triage Evaluation",
+        "hybrid": "Hybrid Triage Evaluation",
+    }
+    title = titles[mode]
     print(title)
     print("=" * len(title))
     print(f"mode: {mode}")
@@ -50,6 +58,9 @@ def _print_summary(summary, *, mode: str, limit: int | None) -> None:
             print(f"{name}: {value}")
         else:
             print(f"{name}: {value:.3f}")
+
+    for name, value in summary.hybrid_diagnostics().items():
+        print(f"{name}: {value}")
 
     print(f"failures: {len(summary.failures)}")
     if not summary.failures:

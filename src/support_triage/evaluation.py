@@ -1,11 +1,12 @@
 import json
 from collections.abc import Callable, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any
 
+from support_triage.hybrid import triage_with_hybrid
 from support_triage.llm import triage_with_llm
-from support_triage.models import TicketInput, TicketPriority, TriageResult
+from support_triage.models import HybridStrategy, TicketInput, TicketPriority, TriageResult
 from support_triage.rules import triage_with_rules
 
 
@@ -52,6 +53,9 @@ class EvaluationSummary:
     critical_priority_recall: float
     exact_match_accuracy: float
     failures: list[FailureRecord]
+    hybrid_used_llm_count: int | None = None
+    hybrid_rules_only_count: int | None = None
+    hybrid_disagreement_case_count: int | None = None
 
     def metrics(self) -> dict[str, int | float]:
         return {
@@ -66,6 +70,16 @@ class EvaluationSummary:
             "critical_priority_recall": self.critical_priority_recall,
             "exact_match_accuracy": self.exact_match_accuracy,
         }
+
+    def hybrid_diagnostics(self) -> dict[str, int]:
+        diagnostics = {}
+        if self.hybrid_used_llm_count is not None:
+            diagnostics["hybrid_used_llm_count"] = self.hybrid_used_llm_count
+        if self.hybrid_rules_only_count is not None:
+            diagnostics["hybrid_rules_only_count"] = self.hybrid_rules_only_count
+        if self.hybrid_disagreement_case_count is not None:
+            diagnostics["hybrid_disagreement_case_count"] = self.hybrid_disagreement_case_count
+        return diagnostics
 
 
 def load_eval_cases(path: Path | str | None = None) -> list[EvaluationCase]:
@@ -115,6 +129,39 @@ def evaluate_llm(
         cases=cases,
         dataset_path=dataset_path,
         limit=limit,
+    )
+
+
+def evaluate_hybrid(
+    cases: Sequence[EvaluationCase] | None = None,
+    dataset_path: Path | str | None = None,
+    limit: int | None = None,
+) -> EvaluationSummary:
+    diagnostics = {
+        "used_llm": 0,
+        "rules_only": 0,
+        "disagreement_cases": 0,
+    }
+
+    def predict_final_result(ticket: TicketInput) -> TriageResult:
+        hybrid_result = triage_with_hybrid(ticket)
+        diagnostics["used_llm"] += int(hybrid_result.used_llm)
+        diagnostics["rules_only"] += int(hybrid_result.strategy == HybridStrategy.RULES_ONLY)
+        diagnostics["disagreement_cases"] += int(bool(hybrid_result.disagreement_fields))
+        return hybrid_result.final_result
+
+    summary = _evaluate_with_predictor(
+        predict_final_result,
+        cases=cases,
+        dataset_path=dataset_path,
+        limit=limit,
+    )
+
+    return replace(
+        summary,
+        hybrid_used_llm_count=diagnostics["used_llm"],
+        hybrid_rules_only_count=diagnostics["rules_only"],
+        hybrid_disagreement_case_count=diagnostics["disagreement_cases"],
     )
 
 
