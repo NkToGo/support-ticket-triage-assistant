@@ -49,4 +49,6 @@ See `reports/llm_smoke_eval.md` for the first live LLM smoke evaluation notes.
 
 See `reports/rules_vs_llm_eval.md` for the Rules vs LLM evaluation comparison.
 
+See `reports/rules_llm_hybrid_eval.md` for the Rules vs LLM vs Hybrid comparison.
+
 See `docs/hybrid-triage-design.md` for the proposed hybrid triage design.
