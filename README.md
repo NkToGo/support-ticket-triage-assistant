@@ -15,6 +15,15 @@ ASGI app import path:
 support_triage.main:app
 ```
 
+## Local API Demo
+
+```powershell
+py -m pip install -e ".[dev]"
+py -m uvicorn support_triage.main:app --reload
+```
+
+Open `http://127.0.0.1:8000/docs` for the interactive FastAPI API documentation.
+
 ## Triage Modes
 
 - `rules`: deterministic keyword and priority rules for a transparent baseline.
